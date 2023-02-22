@@ -170,3 +170,5 @@ rewards:
 xp-per-heart: 0.33
 # Prevent gaining xp killing mobs from spawners
 prevent-levelling-from-spawners: true
+# Multiplier of XP for mobs spawned from a spawner
+mob-spawner-multipler: 0.25

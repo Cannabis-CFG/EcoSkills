@@ -23,6 +23,13 @@ class SkillCombat : Skill(
             return
         }
 
+        
+        if (event.victim.hasMetadata("from-spawner")){
+            val xp2 = (event.victim.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value * this.config.getDouble("xp-per-heart")) * this.config.getDouble("mob-spawner-multipler")
+            player.giveSkillExperience(this, xp2)
+            return;
+        }
+
         val xp = event.victim.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value * this.config.getDouble("xp-per-heart")
         player.giveSkillExperience(this, xp)
     }
