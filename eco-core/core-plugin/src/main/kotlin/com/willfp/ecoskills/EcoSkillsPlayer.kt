@@ -121,15 +121,26 @@ fun OfflinePlayer.getSkillProgressToNextLevel(skill: Skill): Double {
 }
 
 fun OfflinePlayer.getSkillProgressRequired(skill: Skill): Int {
-    return skill.getExpForLevel(this.getSkillLevel(skill) + 1)
+    val xp = this.profile.read(skill.dataXPKey)
+
+    if (!xp.isFinite()) {
+        this.profile.write(skill.dataXPKey, 1.0)
+        return 1.0.toInt()
+    }
+
+    return xp.toInt()
 }
 
 fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
     return this.profile.read(skill.dataXPKey)
 }
 
-fun OfflinePlayer.setSkillProgress(skill: Skill, level: Double) {
-    this.profile.write(skill.dataXPKey, level)
+fun OfflinePlayer.setSkillProgress(skill: Skill, xp: Double) {
+    if (!xp.isFinite()) {
+        return
+    }
+
+    this.profile.write(skill.dataXPKey, xp)
 }
 
 fun OfflinePlayer.getEffectLevel(effect: Effect): Int {
